@@ -69,9 +69,14 @@ some simple cases and ending with more complex ones. But all of them as a core u
 - To make an actual step the method run() is used, which executes exactly one step depending on the current speed.
 
 	This is all we need to tell step motors what we expect doing from them. Creating of different foam shapes is based on intelligent choice
-of a set of target positions, as well as intelligent choice of speed and acceleration which will be discussed in later sections.
+of a set of target positions, how they are processed, as well as intelligent choice of speed and acceleration. These aspects will be discussed in 
+later sections.
 
-	PROJECT DESCRIPTION
+	SUB PROJECT DESCRIPTION
 	
-	
+	An attached project in this folder summarizes the above described information. It is again separated into Processing part and an executable
+Arduino part. With a help of three sliders and one button it is possible to adjust a number of degrees step motor should move, speed and acceleration
+and then send this data to Arduino. Arduino sketch waits until all three parameters are received. If it the case it forbids receiving of another data
+block as long as step motor is still moving. When the step motor is at the target position, arduino sketch switches to wait for data modus and the process
+repeats once again. 
 	
