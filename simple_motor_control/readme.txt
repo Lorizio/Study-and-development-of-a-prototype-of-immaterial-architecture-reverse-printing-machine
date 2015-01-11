@@ -34,5 +34,15 @@ will correspond to a setting without microstepping = full step = highest speed. 
 that breaks one step into 16 microsteps and in such a way makes the motor move much slower. More information on that can be found
 here: http://bildr.org/2012/11/big-easy-driver-arduino/ . Depending on applications that have been implemented, one step has been
 usually broken down into 4 or 16 microsteps, depending on whether the motors had to move slow or fast.
+	We have discussed the Hardware part of step motor control. Let us now lighten the Software part of it. To benefit from controlling
+the step motors in the best way they can be controlled, it has been decided to use an open source AccelStepper library. This library 
+allows to abstract from control on the lowest level by providing a set of intuitive methods, using which it becomes feasible and easy
+to control the step motors in a way we want, without worrying to do something wrong. More important, controlling more than one step
+motor without using an external library has been considered to be quite a big problem. Since we use two step motors in this project,
+it has been obvious to choose this library, because it allows to control more than one motor without increasing difficulty of the
+code. This library is attached and the information how to import and use it, can be found in the root of project's repository.
+	
+	SOFTWARE CORE FOR STEP MOTOR
+	
 	
 	
