@@ -15,6 +15,7 @@
 #define MOTOR2_DIR_PIN 7
 #define MOTOR2_STEP_PIN 6
 
+// described in readme END delimiter for the arrays
 #define END 255
 
 #define FOAM_TIME 148  // adjustable
@@ -22,46 +23,51 @@
 #define SPEED 5000
 #define ACCEL 29000
 
+// in this case maximum 15 control points
+// allowed
 #define N 15
 
 AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
 AccelStepper stepper2(1, MOTOR2_STEP_PIN, MOTOR2_DIR_PIN);
 
-int goToRight[N];
-int goToLeft[N];
+int goToRight[N];  // array with control points in degrees for right
+int goToLeft[N];   // same for left side
 
 int v = 0;
-int counter = 0;
-int counter2 = 0;
+int counter = 0;  // counts number of target positions for right
+int counter2 = 0; // same for left side
 
 boolean rcvd = false;
 
 int targetPos;
 int targetPos2;
 
-int posId = -1;
-int posId2 = -1;
+int posId = -1;  // IDs of goTo positions for right
+int posId2 = -1; // same for left side
 
-boolean stop_;
-boolean stop2;
+boolean stop_;  // flag that identifies when right side
+boolean stop2;  // or left side have been handled
 
-unsigned long waitTime;
-unsigned long waitTime2;
+unsigned long waitTime;  // described in readme idling time
+unsigned long waitTime2; // of step motors
 
 unsigned long time;
 unsigned long time2;
 
 // first receive right curve
 boolean rightCurve = true;
-boolean _begin = true;
+
+boolean _begin = true;  // some auxiliary flags
 boolean _begin2 = true;
-boolean pause = false;
-boolean pause2 = false;
+
+boolean pause = false;    // flags identifying when step motors
+boolean pause2 = false;   // should not move and be idle
 
 void setup()
 {
   Serial.begin(9600);
   
+  // receive modus
   while(!rcvd)
   {   
     if (Serial.available())
@@ -106,10 +112,14 @@ void setup()
     }
   }
   
+  // here data successfully received
+  
   waitTime = FOAM_TIME / counter;
+  // in ms
   waitTime *= 1000;
   
   waitTime2 = FOAM_TIME / counter2;
+  // in ms
   waitTime2 *= 1000;
   
   // fill rest of array with some id
@@ -140,7 +150,7 @@ void setup()
 
 void loop()
 { 
-  //  right
+  //  right step motor
   if (stepper.distanceToGo() == 0 && !pause)
   { 
     if (goToRight[posId + 1] != END)
@@ -164,7 +174,7 @@ void loop()
   
   //--------------------------------------------------------------------------
   
-  // left 
+  // left step motor
   if (stepper2.distanceToGo() == 0 && !pause2)
   { 
     if (goToLeft[posId2 + 1] != END)
