@@ -1,16 +1,34 @@
 import processing.serial.*; 
 
+// right screen (canvas)
 PGraphics curvesControl;
 
+// regulates how fast is control point
+// approached to a mouse cursor while moving it
 final float smooth = 0.5;
+
+// maximum allowed distance in pixels
+// to move a point from its origin
 final int delta = 90;
 
+// max allowed distance in degrees
+// for step motors to move
 final int dInDegree = 225;
 
+// left side of the foam
 Curve leftCurve = null;
+
+// right side
 Curve rightCurve = null;
 
+// defines which side
+// of the foam is being transformed at the moment
+// for example is one any control point on the left side
+// is being moved, then touched = 1
 int touched = -1;
+
+// as long as button construct in GUI has not been
+// clicked, this parameter is false
 boolean curvesConstructed = false;
 
 PFont font;
@@ -40,6 +58,7 @@ void draw()
   {
     curvesControl.background(255);
     
+    // draw the foam sculpture: two sides
     if (curvesConstructed)
     {
       MyPoint[] controlL = leftCurve.getControlData();
@@ -49,6 +68,7 @@ void draw()
     
       curvesControl.stroke(color(0, 0, 255));
       
+      // draw left side
       for (int i = 0; i < lControlSize - 1; i++)
       {
         MyPoint p1 = controlL[i];
@@ -57,6 +77,7 @@ void draw()
         curvesControl.line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
       }
       
+      // draw right side
       for (int i = 0; i < rControlSize - 1; i++)
       {
         MyPoint p1 = controlR[i];
@@ -65,6 +86,7 @@ void draw()
         curvesControl.line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
       }
     
+      // draw control points on the top
       for (int i = 0; i < lControlSize; i++)    { controlL[i].draw(); }      
       for (int i = 0; i < rControlSize; i++)    { controlR[i].draw(); }
     }    
@@ -77,6 +99,7 @@ void draw()
 // which point should be moved...
 void mousePressed()
 { 
+  // resets two sides to its default view
   if (mouseButton == RIGHT)
   {
     leftCurve.reset();
@@ -85,11 +108,13 @@ void mousePressed()
   
   else
   {
+     // drop point
     if (touched == 1 || touched == 2)  
     {         
       touched = -1;  
     }
     
+    // drag point
     else if (curvesConstructed)
     { 
       if (leftCurve.allowMove(mouseX - width/2, mouseY))        { touched = 1; }

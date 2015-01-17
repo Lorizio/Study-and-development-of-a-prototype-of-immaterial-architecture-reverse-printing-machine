@@ -1,5 +1,33 @@
 	INTERFACE
 	
+	This interface allows to manually draw square-shaped foam features using drag and drop.
+Before drawing them, first two default sides have to be constructed. To construct them it
+is sufficient to fill two text fields with desired number of control points from each side.
+Since the height of canvas is pre-defined and the number of control points can vary,
+autoscaling should be done in order to keep that height. In the source code the parameter
+"nPoints" is responsible for that. In order to get square-shaped features we move any control
+point in horizontal plane and two of its neighbour points are moved together with it. Further
+relevant aspect is that a lower neighbour point of any control point should be situated at the
+same height as an upper neighbour point of the next control point and a line between them has to
+exist. This is applicable to all control points and in such a way it is feasible to create square-shaped
+sculptures on the canvas. The described procedure can be found in the constructor of the class
+"Curve".
+	As soon as two sides have been created it becomes possible to move control points from each side
+using drag and drop to get any square-shaped sculpture we want. After the desired structure has been
+constructed, almost everything is ready to start simulation. Before two sets of target positions
+for each side are sent via serial connection, rescaling procesure of control points has to be done in
+order to transform their pixel coordinates into degrees the step motors should move. To do this we
+need two static parameters: "delta" and "dInDegree". The first parameter defines the maximum distance in 
+pixels any control point is allowed to be shifted from its start position using drag and drop. Another
+parameter defines the maximum distance, measured in degrees, the step motors are allowed to move. By
+moving the control points from their start positions we know their new coordinates in pixels, thus
+the only thing to be done in order to estimate exact number of degrees step motors should move, is to
+find a relation between the new coordinates of control points and "delta" parameter and multiply this
+relation with "dInDegree".
+	Now it is everything ready to start the simulation as well as start cutting the foam according to
+the drawn sculpture in interface. By clicking two appropriate buttons a start simulation signal
+is sent to one Arduino board as well as two sets of target positions measured now in degrees to another
+board.
 	
 	ARDUINO CUTTING ALGORITHM
 	

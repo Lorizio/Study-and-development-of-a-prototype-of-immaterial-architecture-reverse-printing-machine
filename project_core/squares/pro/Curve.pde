@@ -1,6 +1,13 @@
+/*
+  class Curve represents one side of the foam
+*/
 class Curve
 {
+  // to auto scale distance between
+  // the points 
   final int nPoints;
+  
+  // total number of points
   final int n_Points;
   
   final int _height = height - 50;
@@ -9,10 +16,15 @@ class Curve
   
   final int controlPoints;
   
-  // control points to draw the curve
+  // array of points that define
+  // one side of the foam
   MyPoint[] points;
+  
+  // index of a control point
+  // that is being moved at the moment
   int pID = -1;
   
+  // constructor
   Curve(int nPointsTemp, int startPosTempX)
   {
     controlPoints = nPointsTemp;
@@ -26,6 +38,8 @@ class Curve
     
     int j = 1;
     float y;
+    
+    // creating of control points and its two neighbour points
     for (int i = 1; i < n_Points; i += 3)
     {
       y = startPosY + j * dBetweenPoints;
@@ -42,12 +56,22 @@ class Curve
     }
   }
   
+  // getter
   int getStartPosX()          { return startPosX; }
   int getControlPoints()      { return controlPoints; }
   
   MyPoint[] getControlData()  { return points; }
   int getControlSize()        { return n_Points; }
   
+  /*
+    this method returns true
+    if a mouse cursor coordinate is in
+    local proximity of any control point coordinate
+    => dragging phase
+    
+    this method also sets an ID of control point
+    that was chosen to be moved
+  */
   boolean allowMove(float x, float y)
   {
     for (int i = 0; i < n_Points; i++)
@@ -63,6 +87,15 @@ class Curve
     return false;
   }
   
+  /*
+    this method moves a previously chosen
+    control point and resets its as well as
+    the coordinates of its two neighbours to
+    the coordinates of a mouse cursor.
+    
+    Moving is allowed only in horizontal plane
+    thus only X coordinate changes.
+  */
   void move(float x)
   {
     float xD = x - points[pID].getX();
@@ -78,6 +111,7 @@ class Curve
     }
   }
   
+  // resets one side of the foam to its default view
   void reset()
   {
     float dBetweenPoints = (float)_height / (nPoints-1);

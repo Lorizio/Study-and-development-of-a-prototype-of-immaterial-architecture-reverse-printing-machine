@@ -55,22 +55,25 @@ void setupGUI()
 
 void controlEvent(ControlEvent event)
 {
-                  // cut
-  
   if (event.name().equals("construct"))
   {
     int controlL = parseInt(tControlL.getText());
     int controlR = parseInt(tControlR.getText());
     
+    // construct two sides of the foam
     rightCurve = new Curve(controlR, curvesControl.width/2 + curvesControl.width/4);
     leftCurve = new Curve(controlL, curvesControl.width/2 - curvesControl.width/4);
     
+    // set a flag which allows drawing procedure
     curvesConstructed = true;
   }
   
   else if (event.name().equals("cut"))
   {    
                     // right curve
+    
+    // rescale pixels to degrees
+    // before sending
     
     MyPoint[] rightData = rightCurve.getControlData();
     int n1 = rightCurve.getControlSize();
@@ -142,6 +145,7 @@ void controlEvent(ControlEvent event)
   }  
 }
 
+// for debugging purposes
 void serialEvent(Serial p)
 {
   String msg = port.readStringUntil('\n');
