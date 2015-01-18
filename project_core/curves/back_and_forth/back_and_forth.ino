@@ -12,20 +12,36 @@
 #define MAX_SIZE 61
 
 int goToIndexL = 0;
+
+// to switch between modes
+// I = 0 -> go to target position
+// I = 1 -> go to zero
+// I = 2 -> delay mode
 int I = 0;
+
+// delay flag
 boolean lock = false;
+
+// current target position and delay value
 int goToL, deltaTimeL;
 
+// start counting delay time
 unsigned long tL = 0;
 
 AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
+
+// discretization array of target positions
 int goToLeft[MAX_SIZE];
+
+// delay array
 int deltaTleft[MAX_SIZE - 1];
 
 int v = 0;
 int counter = 0;
 
+// first receive target positions data block
 boolean goToLeftThere = false;
+
 boolean startCut = false;
 
 void  setup()
@@ -35,6 +51,9 @@ void  setup()
   pinMode(MS1, OUTPUT);
   pinMode(MS2, OUTPUT);
   pinMode(MS3, OUTPUT);
+  
+  // set a step motor's configuration to be very quick
+  // in moving
   
   digitalWrite(MS1, LOW);
   digitalWrite(MS2, HIGH);
@@ -47,6 +66,7 @@ void  setup()
 
 void loop()
 {
+  // receive data
   if (Serial.available())
   {
     char ch = Serial.read();
@@ -85,6 +105,7 @@ void loop()
     Serial.flush();
   }
   
+  // data received
   if (startCut && goToIndexL < MAX_SIZE)
   { 
     goToL = goToLeft[goToIndexL];
@@ -92,6 +113,7 @@ void loop()
     deltaTimeL = deltaTleft[goToIndexL];
     deltaTimeL *= 1000;
     
+    // define in which mode a step motor currently is
     if (!lock)
     { 
       if (stepper.distanceToGo() == 0)
@@ -103,9 +125,6 @@ void loop()
             lock = true;
             I = -1;
             tL = millis();
-            
-            int tosend = goToIndexL+1; 
-            Serial.println(tosend);
           }
           else
           {
@@ -121,6 +140,7 @@ void loop()
       }
     }
     
+    // start waiting
     if (lock)
     { 
       if ( (millis() - tL) >= deltaTimeL )
@@ -129,10 +149,14 @@ void loop()
         goToIndexL++;
       }
     }
+    
+    // do one step
     else 
     { 
       stepper.run();
     }
   }
+  
+  // all target positions are handled
   else  { startCut = false; }
 }
