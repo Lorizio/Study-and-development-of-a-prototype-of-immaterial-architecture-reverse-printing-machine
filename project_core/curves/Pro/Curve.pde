@@ -5,21 +5,30 @@ class Curve
   final int startPosX;
   final int startPosY = 25;
   
-  final float stepAngle;
+  final float stepAngle;  // see readme.txt
   final int dataSize;
   final int nPointsProArc;
   
   // counter to shift within the data array toArduino
   // during one draw() cycle
   int j;
+  
+  // while drawing counter-clockwise curve fragments
+  // swapping of elements within toArduino array needed
+  // because they are saved in reverse order
   MyPoint[] bufArray;
   
   // control points to draw the curve
   MyPoint[] points;
+  
+  // id of control point that is being moved
+  // currently
   int pID = -1;
   
+  // discretization array described in readme.txt
   MyPoint[] toArduino;
   
+  // constructor
   Curve(int nPointsTemp, int nPointsProArcTemp, int startPosTempX)
   {
     nPoints = nPointsTemp * 2 + 1;
@@ -31,6 +40,8 @@ class Curve
     stepAngle = PI/nPointsProArc;
     dataSize = (nPoints / 2) * nPointsProArc + 1;        
     
+    // first create control points and their
+    // neighbours
     for (int i = 0; i < nPoints; i++)
     {
       float dBetweenPoints = (float)_height / (nPoints-1);
@@ -40,6 +51,7 @@ class Curve
       else              { points[i] = new MyPoint(startPosX, y, 5, false); }
     }
     
+    // create a global set of points which discretize one foam's side
     toArduino = new MyPoint[dataSize];
     
     for (int i = 0; i < dataSize; i++)
@@ -52,6 +64,7 @@ class Curve
     bufArray = new MyPoint[nPointsProArc + 1];
   }
   
+  // getter
   int getStartPosX()          { return startPosX; }
   
   MyPoint[] getControlData()  { return points; }
@@ -60,6 +73,12 @@ class Curve
   MyPoint[] getData()         { return toArduino; }
   int getSize()               { return dataSize; }
   
+  // Analyze one foam's side,
+  // whether a line or half ellipse
+  // between two neighbours of any control point
+  // should be drawn.
+  // This method rewrites toArduino array completely
+  // within each draw() cycle
   void draw()
   {        
     j = 0;
@@ -91,8 +110,10 @@ class Curve
     }       
   }
   
+  // creates one arc
   void drawArc(MyPoint p1, MyPoint p2, MyPoint p3)
   {
+    // see readme.txt
     float w = abs(p1.getX() - p2.getX());
     float dBetweenPoints = (float)_height / (nPoints-1);
     float h = dBetweenPoints;
@@ -101,17 +122,21 @@ class Curve
     
     float startAngle, endAngle;
     
+    // clockwise arc
     if (p2.getX() > p1.getX())
     {
       startAngle = -PI/2;
       endAngle = PI/2;
     }
+    
+    // counter-clockwise arc
     else
     {
       startAngle = PI/2;
       endAngle = 3*PI/2;
     }
     
+    // see readme.txt
     for (float angle = startAngle; angle <= endAngle; angle += stepAngle)
     {
       float x = xC + w * cos(angle);
@@ -148,6 +173,15 @@ class Curve
     }
   }
   
+  /*
+    this method returns true
+    if a mouse cursor coordinate is in
+    local proximity of any control point coordinate
+    => dragging phase
+    
+    this method also sets an ID of control point
+    that was chosen to be moved
+  */
   boolean allowMove(float x, float y)
   {
     for (int i = 0; i < nPoints; i++)
@@ -163,6 +197,15 @@ class Curve
     return false;
   }
   
+  /*
+    this method moves a previously chosen
+    control point and resets its as well as
+    the coordinates of its two neighbours to
+    the coordinates of a mouse cursor.
+    
+    Moving is allowed only in horizontal plane
+    thus only X coordinate changes.
+  */
   void move(float x)
   {
     float xD = x - points[pID].getX();
@@ -174,6 +217,7 @@ class Curve
     }
   }
   
+  // resets one side of the foam to its default view
   void reset()
   {
     for (int i = 0; i < nPoints; i++)

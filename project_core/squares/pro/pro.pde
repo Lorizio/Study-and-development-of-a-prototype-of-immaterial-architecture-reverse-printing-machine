@@ -108,7 +108,7 @@ void mousePressed()
   
   else
   {
-     // drop point
+    // drop point
     if (touched == 1 || touched == 2)  
     {         
       touched = -1;  

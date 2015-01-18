@@ -54,17 +54,17 @@ void setupGUI()
 }
 
 void controlEvent(ControlEvent event)
-{
-                  // cut
-  
+{ 
   if (event.name().equals("construct"))
   {
     int controlL = parseInt(tControlL.getText());
     int controlR = parseInt(tControlR.getText());
     
+    // construct two sides of the foam
     rightCurve = new Curve(controlR, 12, curvesControl.width/2 + curvesControl.width/6);
     leftCurve = new Curve(controlL, 12, curvesControl.width/2 - curvesControl.width/6);
     
+    // set a flag which allows drawing procedure
     curvesConstructed = true;
   }
   
