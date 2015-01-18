@@ -9,7 +9,7 @@ we use two Arduino boards: one that controls foam producing and another one cont
 step motors. Using only one Arduino board to control everything is possible, but experimentally it has been
 proven that splitting the control mission into two independent parts shows much better results. 
 	Each project's interface is divided into two parts. The first one is common no matter what project it is
-and	controls creating canvas where desired foam sculpture is drawn. This part of interface is also responsible 
+and	controls creating of canvas, where desired foam sculpture is drawn. This part of interface is also responsible 
 for controlling the whole simulation. Another part of interface represents a canvas itself. Depending on the project
 it is possible either to create the desired form manually using drag and drop approach, or to create it automatically
 using microphone. As soon as everything is ready to simulate (desired form is drawn), you can send start simulation signal to
