@@ -24,6 +24,12 @@
 #define BASE_ACCEL 110
 
 #define N 21
+
+// calculate this number very carefully
+// depending on which board is used
+// this number has to be adjusted appropriately
+// for example for Uno or Mega it is different
+// since Mega has 4 times more SRAM memory than Uno
 #define N2 3000
 
 AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);

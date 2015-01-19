@@ -81,10 +81,50 @@ much more acceptable results and the below described algorithm is able to achiev
 of doing the sequence go to one target position, go to zero, delay, go to another target position, will slow and smoothly move from one
 target position to another. This approach thus can be considered as an opposite to the first algorithm.
 	The very first issue was to make a step motor move very slow, considerably slower than before. To achieve this a set of experiments
-has been done. First an array containing a small number of target positions was created. During this test a step motor was sequentially
-handling them as usual, but additionally two time stamps were introduced. During the first one our step motor was allowed to move, whereas
-during the second one not. Trying different combinations of those it was possible to slown down a motor without changing its speed and
-acceleration, but the motion itself was not smooth enough to be acceptable. The library's core for a step motor implicitly does this kind
-of procedure, so implementing this kind of routine explicitly was not acceptable. This lead to make further experiments, but now an attempt
-was made to reduce the acceleration.
-	
+has been done. First an array containing a small number of target positions to simulate a set of control points was created.
+During this test a step motor was sequentially handling them as usual, but additionally two time stamps were introduced. 
+During the first one our step motor was allowed to move, whereas during the second one not. Trying different combinations of those it was
+possible to slown down a motor without changing its speed and acceleration, but the motion itself was not smooth enough to be acceptable. 
+The library's core for a step motor implicitly does this kind of procedure, so implementing this kind of routine explicitly was not acceptable. 
+This lead to make further experiments, but now an attempt was made to reduce the acceleration.
+	In the second set of experiments the acceleration was sequentially reduced by keeping a small number of target positions. Reducing
+the acceleration, as expected, made a step motor move significantly slower but one problem arised. If a set of target positions is not
+dense enough, for example {0, 90, 180, 90, 0}, than reducing only acceleration will not bring expected results. Instead, as a result
+we will get totally not smooth motion, since using small acceleration will take a lot of time for a step motor to reach its maximum
+speed and it will take the same amount of time to decelerate from this speed to zero while approaching to the current position. The higher
+acceleration stays, the smoother motion will be, but not slow enough to get the features with good resolution. The lower acceleration
+is, the slower motion will be, but smooth motion can not be guaranteed. This lead to do the final set of experiments, which indeed
+has shown good results.
+	We will now keep reducing the acceleration, but now make a set of target positions very dense. If we take a set from above and make
+it dense like {0, 1, 2, ..., 90, 91, ..., 180, ..., 0}, the above described disadvantage disappears, because only one degree is everything
+what separates two consecutive target positions and we can neglect with time intervals needed for acceleration and deceleration, because
+they are very small. In such a way it was possible to establish stabil smooth and slow motion for two step motors. Further decision to be 
+taken was to decide in what way to make an array of target positions dense. While describing the interface chapter, we mentioned that
+we would make use of array which contains only information about control points, but it is not dense enough. In order to make it
+dense, two possibilities were considered: either to send discretization array that contains all information about one curve's side and not
+only control points, or to send array that consists of only control point positions and make it dense on the Arduino side. The last option
+has been chosen, because time needed to send more data via serial connection is much more than processing time of Arduino's CPU to achieve
+the same goal.
+	Another issue was lack of SRAM Arduino's memory, especially for Arduino Uno board. Since now the array of target positions should be very
+dense, we should store much more values as usual and carefully choose a data type for elements in this array. Choosing of smaller data type
+such as "byte" allows moving maximum up to 255 degrees, which might be not big enough to het high foam fragments resolution, whereas a bigger
+data type such as "unsigned int" would cause memory lack problems. This memory issue could have been solved by just sending each value
+separately without storing them in a big array, but again it would have taken much more time to communicate between a step motor, Arduino
+and processing. Moreover the acceptability of results because of these communication delays would be also under a question. Thus it has
+been considered to send only small array with control points, make it dense on the Arduino side and store all these values in array, which
+size should be carefully calculated. 
+	Last issue to solve was a problem of selecting the right value for acceleration. For example, if the left side has only one curve
+fragment, whereas the right side four, and both step motors should finish their cutting jobs by the time foam has reached it maximum
+height, it is obviously that two step motors should have different acceleration values. To determine the relation between a number
+of curve fragments and acceleration, a set of experiments has been done. Knowing a time interval needed to reach the maximum foam's height,
+a purpose of the first experiment was to determine by which acceleration value one step motor cuts exactly one curve fragment during
+this time. After that another set of experiments has been done to estimate what acceleration should be to produce two, four, eight and 
+so on curve fragments within specified time. Experimental results showed the following relation: by increasing a number of curve fragments
+by two, appropriate acceleration value should be increased by four. The following formula summarizes this relation, defining a value
+for acceleration depending on a number of curve fragments:
+double power = log(curves) / log(2);
+double accel = BASE_ACCEL * pow(2, (power * 2));
+where "curves" is a number of curve fragments and "BASE_ACCEL" is acceleration value needed to handle one curve fragment within specified
+time interval.
+	Experimental results using foam fabrication have shown a good level of acceptability and resolution, which can be seen in the video
+report of the project.
