@@ -76,3 +76,15 @@ much more acceptable results and the below described algorithm is able to achiev
 
 	
 	SLOW CONTINIOUS MOTION CUTTING ALGORITHM
+		
+	This algorithm implements continious motion of two step motors. Having two sequential target positions, now two step motors instead
+of doing the sequence go to one target position, go to zero, delay, go to another target position, will slow and smoothly move from one
+target position to another. This approach thus can be considered as an opposite to the first algorithm.
+	The very first issue was to make a step motor move very slow, considerably slower than before. To achieve this a set of experiments
+has been done. First an array containing a small number of target positions was created. During this test a step motor was sequentially
+handling them as usual, but additionally two time stamps were introduced. During the first one our step motor was allowed to move, whereas
+during the second one not. Trying different combinations of those it was possible to slown down a motor without changing its speed and
+acceleration, but the motion itself was not smooth enough to be acceptable. The library's core for a step motor implicitly does this kind
+of procedure, so implementing this kind of routine explicitly was not acceptable. This lead to make further experiments, but now an attempt
+was made to reduce the acceleration.
+	
