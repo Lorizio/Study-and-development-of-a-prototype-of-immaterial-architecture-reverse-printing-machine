@@ -25,18 +25,23 @@
 
 #define N 21
 #define N2 3000
-//#define N2 1800
 
 AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
 AccelStepper stepper2(1, MOTOR2_STEP_PIN, MOTOR2_DIR_PIN);
 
+// type is important.
+// possible memory problems
 byte goToRight[N];
 byte goToLeft[N];
-//unsigned int goToRight[N];
-//unsigned int goToLeft[N];
 
 int v = 0;
+
+// counts a number of received control
+// points for the right side
 int counter = 0;
+
+// counts a number of received control
+// points for the left side
 int counter2 = 0;
 
 boolean rcvd = false;
@@ -44,19 +49,27 @@ boolean rcvd = false;
 int targetPos;
 int targetPos2;
 
+// id of current target position for R side
 int posId = -1;
+
+// id of current target position for L side
 int posId2 = -1;
 
+// when no more target positions from R, L side
+// to handle -> stop
 boolean stop_;
 boolean stop2;
 
+// see readme.txt
 byte iMediate[N2];
 byte iMediate2[N2];
-//unsigned int iMediate[N2];
-//unsigned int iMediate2[N2];
 
+// in case of straight line fragment -> wait
+// at the current position
 unsigned int waitTime;
 unsigned int waitTime2;
+
+// start counting time
 unsigned int time;
 unsigned int time2;
 
@@ -67,6 +80,7 @@ void setup()
 {
   Serial.begin(9600);
   
+  // wait for data
   while(!rcvd)
   { 
     if (Serial.available())
@@ -110,6 +124,11 @@ void setup()
       }
     }
   }
+  // data received
+  
+  // depending on the number of control points
+  // define how long a delay for step motors should be
+  // to make a straight line fragment
   
   waitTime = FOAM_TIME / (counter - 1);
   waitTime *= 1000;
@@ -129,6 +148,7 @@ void setup()
   double power = log(curves) / log(2);
   double power2 = log(curves2) / log(2);
   
+  // for further explonation see readme.txt
   double accel = BASE_ACCEL * pow(2, (power * 2));
   double accel2 = BASE_ACCEL * pow(2, (power2 * 2));
   
@@ -157,38 +177,46 @@ void setup()
   // in order to smooth the acceleration and make
   // it not notable -> new array iMediate
   
-  //int k = 0;
-  //for (k = 0; k <= goToRight[0]; k++) { iMediate[k] = k; }
   
+  // we don't fill the first target position
+  // with intermediate values, because we want
+  // to move there as quick as possible.
+  // Setting acceleration, speed to higher values 
+  // while decreasing the microstepping would be even better
   iMediate[0] = goToRight[0];
   int k = 1;
   
+  // start filling the target position array
+  // with intermediate values
+  // see readme.txt for further explonation
   for (int i = 1; i < N; i++)
   {
     if (goToRight[i] == END)  { break; }
     
+    // counter-clockwise curve fragment
     if (goToRight[i] > goToRight[i-1])
     {
       for (int j = goToRight[i-1]; j <= goToRight[i]; j++)
       {
         iMediate[k] = j;
-        //Serial.println(iMediate[k]);
         k++;
       }
     }
+    
+    // clockwise curve fragment
     else if (goToRight[i] < goToRight[i-1])
     {
       for (int j = goToRight[i-1]; j >= goToRight[i]; j--)
       {
         iMediate[k] = j;
-        //Serial.println(iMediate[k]);
         k++;
       }
     }
+    
+    // straight line fragment
     else
     {
       iMediate[k] = WAIT;
-      //Serial.println(iMediate[k]);
       k++;
     }
   }
@@ -198,8 +226,9 @@ void setup()
     
   //-----------------------------------------------------------------
   
-  //for (k = 0; k <= goToLeft[0]; k++) { iMediate2[k] = k; }
   
+  // absolutely the same is applied to the left side and
+  // second step motor appropriately
   iMediate2[0] = goToLeft[0];
   k = 1;
   
@@ -212,7 +241,6 @@ void setup()
       for (int j = goToLeft[i-1]; j <= goToLeft[i]; j++)
       {
         iMediate2[k] = j;
-        //Serial.println(iMediate[k]);
         k++;
       }
     }
@@ -221,14 +249,12 @@ void setup()
       for (int j = goToLeft[i-1]; j >= goToLeft[i]; j--)
       {
         iMediate2[k] = j;
-        //Serial.println(iMediate[k]);
         k++;
       }
     }
     else
     {
       iMediate2[k] = WAIT;
-      //Serial.println(iMediate[k]);
       k++;
     }
   }
@@ -237,19 +263,23 @@ void setup()
   for (int i = k; i < N2; i++) { iMediate2[k] = END; }
 }
 
+// main loop
 void loop()
 { 
+  // what happens after any target position has been handled
   if (stepper.distanceToGo() == 0)
   {
+    // if there are still positions to handle and it is not a straight
+    // line fragment -> set the new one
     if (iMediate[posId + 1] != END && iMediate[posId + 1] != WAIT)
     {
       stop_ = false;
       posId++;
       targetPos = ((float)iMediate[posId] / ONE_FULL_STEP) * MICROSTEPS;
       stepper.moveTo(targetPos);
-      
-      //Serial.println(iMediate[posId]);
     }
+    
+    // in case of straight line fragment
     else if (iMediate[posId + 1] == WAIT)  
     { 
       // idle
@@ -259,11 +289,14 @@ void loop()
       
       posId++;
     }
+    
+    // no more target positions to handle
     else  { stop_ = true; }
   }
   
   //-------------------------------------------------------------------
   
+  // same for the second step motor
   if (stepper2.distanceToGo() == 0)
   {
     if (iMediate2[posId2 + 1] != END && iMediate2[posId2 + 1] != WAIT)
@@ -285,6 +318,7 @@ void loop()
     else  { stop2 = true; }
   }
   
+  // make a step
   if (!stop_)  { stepper.run(); }
   if (!stop2)  { stepper2.run(); }
 }
