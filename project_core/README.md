@@ -1,8 +1,8 @@
-	After providing the fundamentals of how to control different parts of given installation,
-it is possible now to aggregate them together and create different foam sculptures. Next three projects
-demonstrate how this can be done using three different interface versions for each kind of foam
-sculpture.
-	The following types of foam sculptures will be presented: squares, curves and squares which are formed
+## Folder content
+
+After providing the fundamentals of how to control different parts of given installation, it is possible now to aggregate them together and create different foam sculptures. Next three projects demonstrate how this can be done using three different interface versions for each kind of foam sculpture.
+
+The following types of foam sculptures will be presented: squares, curves and squares which are formed
 automatically using microphone. For each of those types there exist an appropriate interface implemented 
 using Processing, as well as an Arduino source code that implements the desired behaviour. In each project 
 we use two Arduino boards: one that controls foam producing and another one controls the desired behaviour of
