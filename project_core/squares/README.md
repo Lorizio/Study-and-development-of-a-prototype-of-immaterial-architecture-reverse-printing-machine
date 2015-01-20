@@ -1,17 +1,6 @@
 ## Interface
 	
-This interface allows to manually draw square-shaped foam features using drag and drop.
-Before drawing them, first two default sides have to be constructed. To construct them it
-is sufficient to fill two text fields with desired number of control points from each side.
-Since the height of canvas is pre-defined and the number of control points can vary,
-autoscaling should be done in order to keep that height. In the source code the parameter
-"nPoints" is responsible for that. In order to get square-shaped features we move any control
-point in horizontal plane and two of its neighbour points are moved together with it. Further
-relevant aspect is that a lower neighbour point of any control point should be situated at the
-same height as an upper neighbour point of the next control point and a line between them has to
-exist. This is applicable to all control points and in such a way it is feasible to create square-shaped
-sculptures on the canvas. The described procedure can be found in the constructor of the class
-"Curve".
+This interface allows to manually draw square-shaped foam features using drag and drop. Before drawing them, first two default sides have to be constructed. To construct them it is sufficient to fill two text fields with desired number of control points from each side. Since the height of canvas is pre-defined and the number of control points can vary, autoscaling should be done in order to keep that height. In the source code the parameter **nPoints** is responsible for that. In order to get square-shaped features we move any control point in horizontal plane and two of its neighbour points are moved together with it. Further relevant aspect is that a lower neighbour point of any control point should be at the same height as an upper neighbour point of the next control point and a line between them has to exist. This is applicable to all control points, and in such a way it is feasible to create square-shaped sculptures on the canvas. The described procedure can be found in the **constructor of the class Curve**.
 
 As soon as two sides have been created it becomes possible to move control points from each side
 using drag and drop to get any square-shaped sculpture we want. After the desired structure has been
