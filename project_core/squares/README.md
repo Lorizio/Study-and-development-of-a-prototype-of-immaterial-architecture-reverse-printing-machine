@@ -27,9 +27,4 @@ identifier** (see code).
 
 To construct square-shaped foam sculptures the following idea was used: we can measure the time needed to create foam of maximum height and we know a number of target positions from each side. Thus if we divide this time by the number of control points from each side, we get the time needed to treat exactly one control point. Since we try to obtain square-shaped sculptures, this time interval is considered to be the time step motor does not move. It simply stays at the specified position with the turned-on DC motor that sculptures the foam during this time interval. After that step motor moves to the next target position and stays in idling mode as described above. This kind of routine is repeated until all control points from each side have been handled by two step motors. 
 
-One important point to notice is that in order to get approximately square-shaped sculptures the 
-motion from one target position to another should be as instant as possible. Thus the value for 
-microstepping has been chosen to be 4. At the same time it is logical to set the speed and 
-acceleration as high as possible to achieve better results. Using configuration (see source code) 
-it was possible to achieve some good-recognizable results, but setting those parameter as high 
-(in case of speed and acceleration) as possible, while decreasing microstepping should bring better results.
+One important point to mention, is that in order to get approximately square-shaped sculptures the motion from one target position to another should be as instant as possible. Thus the value for **microstepping has been chosen to be 4**. At the same time it is logical to **set the speed and acceleration as high** as possible to achieve better results. Using an appropriate configuration (see source code), it was possible to achieve some good-recognizable results, but setting those parameter as high (in case of speed and acceleration) as possible, while decreasing microstepping should bring better results.
