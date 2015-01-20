@@ -13,10 +13,9 @@ simple behaviour is often enough to achieve quite good results. However there is
 
 It is impossible to ignore these disadvantages in terms of this project, thus a decision has been made to use step motors, which turn all previously mentioned disadvantages into advantages, thus allowing to obtain more flexibility. By using them it
 becomes possible to move to any point you want, with adjustable speed/acceleration and in any direction. This is exactly what
-we need, since the purpose is to create different forms of foam within a specific time interval. 
+we need, since the purpose is to create different forms of foam within a specific time interval. Step motors have its minimum allowed movement measure, called a "step". A majority of step motors do one revolution (360 degrees) using 200 steps, thus one step corresponds to **1.8** degree.
 
-Step motors have its minimum allowed movement called "step". A majority of step motors realize one revolution (360 degrees) using 200 steps, thus one step corresponds to 1.8 degree.
-	Powering the motor is a next issue we want to discuss. Step motors are not powered directly from the power supply, but through the so called Big Easy Step Drivers. It is an additional middle layer hardware component between Arduino board and step motor itself. It can take high abuse and power and powers step motors directly. It is possible to power this Driver using 8-30V but the common recommendation is to use the highest voltage value it is allowed to. In such a way step motors will spin faster. In our setting we use 15 V power supply which has shown good results. 
+Powering a motor is a next issue we want to discuss. Step motors are not powered directly from the power supply, but through the so called Big Easy Step Drivers. It is an additional middle layer hardware component between Arduino board and step motor itself. It can take high abuse and power and powers step motors directly. It is possible to power this Driver using 8-30V but the common recommendation is to use the highest voltage value it is allowed to. In such a way step motors will spin faster. In our setting we use 15 V power supply which has shown good results. 
 	The second important aspect which can drastically influence the step motor's
 behaviour is Driver's built-in adjustable potentiometer, which determines how much current (0-2A) will be going through the motor's
 coils. Setting it too less will not let the motor be powerful enough, whereas setting it up to high can just burn the motor. After
