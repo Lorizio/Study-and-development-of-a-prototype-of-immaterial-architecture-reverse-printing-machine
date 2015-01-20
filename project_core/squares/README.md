@@ -22,9 +22,8 @@ board.
 	
 ## Cutting algorithm
 	
-In the setup() function we first wait until all data is received. The following protocol
-to send and recieve data is used: ( target position_1, ..., target position_R; 
-target position_1, ..., target position_L. ), where target position_1...R are control points
+In the **setup()** function we first wait until all data is received. The following protocol to send and recieve data is used: **( target position_1, ..., target position_R; 
+target position_1, ..., target position_L. )**, where target position_1...R are control points
 measured in degrees the right step motor should move, and target position_1...L are control
 points for the left step motor. All these target positions are stored in two arrays of fixed
 size and since it is impossible to know exact number of elements in these two arrays by compile
