@@ -1,3 +1,5 @@
+## Background
+
 In the previous version of this project the installation had much smaller size. Additionally, to be able to move two parts
 of this installation that cut the foam from both sides, two servo motors were used. In this project a focus on using a
 different kind of motors has been made and there are different reasons for that.
