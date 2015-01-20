@@ -3,13 +3,15 @@
 In the previous version of this project the installation had much smaller size. Additionally, to be able to move two parts
 of this installation that cut the foam from both sides, two servo motors were used. In this project a focus on using a
 different kind of motors has been made and there are different reasons for that.
-	Servo motors are widely used in practice because it is very easy to control them and in a wide range of applications this
+
+Servo motors are widely used in practice because it is very easy to control them and in a wide range of applications this
 simple behaviour is often enough to achieve quite good results. However there is a list of disadvantages in using them:
 - Moving is limited only to a specific angle.
 - Impossibility to get a feed-back at which position during run-time the servo motor is (there is a hack to do it by using an
   internal potentiometer, but it involves some soldering efforts).
 - Limited power.
-	It is impossible to ignore these disadvantages in terms of this project, thus a decision has been made to use step motors,
+
+It is impossible to ignore these disadvantages in terms of this project, thus a decision has been made to use step motors,
 which turn all previously mentioned disadvantages into advantages thus allowing to be obtain more flexibility. Using them is
 becomes possible to move to any point you want, with adjustable speed/acceleration and in any direction. This is exactly what
 we need, since the purpose is to be able to create different forms of foam within a specific time interval. Step motors have
