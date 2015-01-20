@@ -61,10 +61,14 @@ where **ONE_FULL_STEP** corresponds to 1.8 degree and **MICROSTEPS** can take va
 ```java
 distanceToGo();
 ```
-would be one option to adress this problem. This method calculates the difference between the specified target position and the actual position. If difference reaches zero, it would mean our step motor has reached it and another target position can be defined.
-- To make an actual step the method run() is used, which executes exactly one step depending on the current speed.
+would be one option to adress this problem. This method calculates the difference between the specified target position and the actual position. If difference reaches **0**, it would mean our step motor has reached it and another target position can be defined.
+- To make an actual step a method
+```java
+run();
+```
+is used, which executes exactly one step depending on the current speed.
 
-	This is all we need to tell step motors what we expect doing from them. Creating of different foam shapes is based on intelligent choice
+This is all we need to tell step motors what we expect doing from them. Creating of different foam shapes is based on intelligent choice
 of a set of target positions, how they are processed, as well as intelligent choice of speed and acceleration. These aspects will be discussed in 
 later sections.
 
