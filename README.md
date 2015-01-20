@@ -1,4 +1,4 @@
-![alt text](https://github.com/slakri/Study-and-development-of-a-prototype-of-immaterial-architecture-reverse-printing-machine/blob/master/foam.png "Logo Title Text 1")
+![alt text](https://github.com/slakri/Study-and-development-of-a-prototype-of-immaterial-architecture-reverse-printing-machine/blob/master/img/foam.png "Different foam sculptures")
 
   PROJECT DECRIPTION
 
