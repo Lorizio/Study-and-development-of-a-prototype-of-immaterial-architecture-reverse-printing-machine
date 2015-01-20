@@ -31,7 +31,7 @@ During the semester a number of algorithms have been implemented, which use step
 ```java
 AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
 ```
-- As you can see, the constructor does not contain pins for **MS_i**. The core of AccelStepper library does not set up these pins, thus it has to be done in the **setup()** method in every Arduino sketch using commands:
+- As you can see, the constructor does not contain pins for **MS_i**. The core of **AccelStepper library** does not set up these pins, thus it has to be done in the **setup()** method in every Arduino sketch using commands:
 ```java
 pinMode(MS_i, OUTPUT);
 ```
