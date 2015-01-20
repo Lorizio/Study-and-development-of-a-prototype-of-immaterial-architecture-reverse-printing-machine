@@ -4,11 +4,11 @@ This interface allows to manually draw curve-shaped foam features using drag and
 ```java
 nPoints = nPointsTemp * 2 + 1;
 ```
-elements, where **nPointsTemp** is a number of control points we filled in a text field before, and the second array contains ```java
+elements, where **nPointsTemp** is a number of control points we filled in a text field before, and the second array contains
+```java
 dataSize = (nPoints / 2) * nPointsProArc + 1;
 ```
-elements, where "nPointsProArc"
-denotes a number of intermediate points between the lower and upper neighbour of any control point.
+elements, where **nPointsProArc** denotes a number of intermediate points between the lower and upper neighbour of any control point.
 
 Later in Arduino's section we are going to introduce two possible cutting algorithms that make use of these two arrays. The first one will use data from a bigger array with "dataSize" number of elements, whereas the second algorithm will use an array that contains only information about control points.
 
