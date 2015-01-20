@@ -57,7 +57,7 @@ As an argument it takes not a number of degrees the motor should move, but a num
 int targetPos = ((float)angle / ONE_FULL_STEP) * MICROSTEPS;
 ```
 where **ONE_FULL_STEP** corresponds to 1.8 degree and **MICROSTEPS** can take values from {1, 2, 4, 8, 16} depending on MS_i pins.
-- We want to be able to tell a step motor that it should move to another position as soon as it has rotated to the previous one. For that we should receive a feed-back from, when it has actually reached it. If to have a look into the core code, method
+- We want to be able to tell a step motor that it should move to another position as soon as it has rotated to the previous one. For that we should receive a feed-back, when it has actually reached it. If to have a look into the core code, method
 ```java
 distanceToGo();
 ```
