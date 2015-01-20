@@ -31,7 +31,7 @@ During the semester a number of algorithms have been implemented, which use step
 ```java
 AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
 ```
-- As you can see, the constructor does not contain pins for **MS_i**. The core of **AccelStepper library** does not set up these pins, thus it has to be done in the **setup()** method in every Arduino sketch using commands:
+- As you can see, the constructor does not contain pins for **MS_i**. The core of **AccelStepper library** does not set up these pins, thus it has to be done in the **setup()** method in every Arduino sketch by using commands:
 ```java
 pinMode(MS_i, OUTPUT);
 ```
@@ -39,10 +39,15 @@ and
 ```java
 digitalWrite(MS_i, LOW/HIGH);
 ```
-- Set up speed and acceleration using methods setSpeed(SPEED) and setAcceleration(ACCELERATION). The first method sets up the end speed
-  of step motor, whereas the second one defines how quick or how slow this end speed is going to be reached. If to have a look over the core code
-  of this library, it can be concluded that in order to reach some position, step motor will first accelerate up to some intermediate position
-  and then decelerate before reaching the specified position.
+- Set up speed and acceleration using methods 
+```java
+setSpeed(SPEED);
+```
+and 
+```java
+setAcceleration(ACCELERATION);
+```
+The first method sets up the end speed of step motor, whereas the second one defines how quick or how slow this end speed is going to be reached. If to have a look over the core code of this library, it can be concluded that in order to reach some position, step motor will first accelerate up to some intermediate position and then decelerate before reaching the specified position.
 - We want to be able to ensure that two step motors rotate exactly to an angle we specify in degrees. There exist a special method for
   such purpose in this library called moveTo(NUMBER_OF_STEPS). As an argument it takes not a number of degrees the motor should move,
   but a number of raw steps. Thus it is important to recalculate how many steps should step motor do if we want it to rotate to a specific
