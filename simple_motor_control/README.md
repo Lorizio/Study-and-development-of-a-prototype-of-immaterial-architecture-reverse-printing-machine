@@ -4,10 +4,10 @@ In the previous version of this project the installation had much smaller size. 
 of this installation that cut the foam from both sides, two servo motors were used. In this project a focus on using a
 different kind of motors has been made and there are different reasons for that.
 
-Servo motors are widely used in practice because it is very easy to control them and in a wide range of applications this
+Servo motors are widely used in practice, because it is very easy to control them, and in a wide range of applications this
 simple behaviour is often enough to achieve quite good results. However there is a list of disadvantages in using them:
 - Moving is limited only to a specific angle.
-- Impossibility to get a feed-back at which position during run-time the servo motor is (there is a hack to do it by using an
+- Impossibility to get a feed-back, at which position during run-time the servo motor is (there is a hack to do it by using an
   internal potentiometer, but it involves some soldering efforts).
 - Limited power.
 
