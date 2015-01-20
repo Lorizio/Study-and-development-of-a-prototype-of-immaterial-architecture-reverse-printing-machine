@@ -11,8 +11,7 @@ simple behaviour is often enough to achieve quite good results. However there is
   internal potentiometer, but it involves some soldering efforts).
 - Limited power.
 
-It is impossible to ignore these disadvantages in terms of this project, thus a decision has been made to use step motors,
-which turn all previously mentioned disadvantages into advantages thus allowing to be obtain more flexibility. Using them is
+It is impossible to ignore these disadvantages in terms of this project, thus a decision has been made to use step motors, which turn all previously mentioned disadvantages into advantages, thus allowing to obtain more flexibility. By using them it
 becomes possible to move to any point you want, with adjustable speed/acceleration and in any direction. This is exactly what
 we need, since the purpose is to be able to create different forms of foam within a specific time interval. Step motors have
 its minimum allowed movement called "step". A majority of step motors realize one revolution (360 degrees) using 200 steps, thus
