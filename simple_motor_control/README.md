@@ -31,8 +31,14 @@ During the semester a number of algorithms have been implemented, which use step
 ```java
 AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
 ```
-- As you can see, the constructor does not contain PINs MS_i. The core of AccelStepper library does not set up these PINs, thus it has
-  to be done in the setup() method in every Arduino sketch using commands: pinMode(MS_i, OUTPUT) and digitalWrite(MS_i, LOW/HIGH).
+- As you can see, the constructor does not contain pins for **MS_i**. The core of AccelStepper library does not set up these pins, thus it has to be done in the **setup()** method in every Arduino sketch using commands:
+```java
+pinMode(MS_i, OUTPUT);
+```
+and 
+```java
+digitalWrite(MS_i, LOW/HIGH);
+```
 - Set up speed and acceleration using methods setSpeed(SPEED) and setAcceleration(ACCELERATION). The first method sets up the end speed
   of step motor, whereas the second one defines how quick or how slow this end speed is going to be reached. If to have a look over the core code
   of this library, it can be concluded that in order to reach some position, step motor will first accelerate up to some intermediate position
