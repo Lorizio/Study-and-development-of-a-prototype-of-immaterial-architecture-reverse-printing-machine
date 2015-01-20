@@ -47,12 +47,12 @@ and
 ```java
 setAcceleration(ACCELERATION);
 ```
-The first method sets up the end speed of step motor, whereas the second one defines how quick or how slow this end speed is going to be reached. If to have a look over the core code of this library, it can be concluded that in order to reach some position, step motor will first accelerate up to some intermediate position and then decelerate before reaching the specified position.
-- We want to be able to ensure that two step motors rotate exactly to an angle we specify in degrees. There exist a special method for
-  such purpose in this library called moveTo(NUMBER_OF_STEPS). As an argument it takes not a number of degrees the motor should move,
-  but a number of raw steps. Thus it is important to recalculate how many steps should step motor do if we want it to rotate to a specific
-  angle measured in degrees, using the following relation: int targetPos = ((float)angle / ONE_FULL_STEP) * MICROSTEPS, where ONE_FULL_STEP
-  corresponds to 1.8 degree and MICROSTEPS can take values from {1, 2, 4, 8, 16} depending on MS_i PINs.
+The first method sets up the end speed of step motor, whereas the second one defines how quick or how slow this end speed is going to be reached. If to have a look into the core code of this library, it can be concluded that in order to reach some position, step motor will first accelerate up to some intermediate position and then decelerate before reaching the specified position.
+- We want to ensure that two step motors rotate exactly to an angle we specify in degrees. There is a method for such purpose in this library called
+```java
+moveTo(NUMBER_OF_STEPS);
+```
+As an argument it takes not a number of degrees the motor should move, but a number of raw steps. Thus it is important to recalculate how many steps should step motor do if we want it to rotate to a specific angle measured in degrees, using the following relation: int targetPos = ((float)angle / ONE_FULL_STEP) * MICROSTEPS, where ONE_FULL_STEP corresponds to 1.8 degree and MICROSTEPS can take values from {1, 2, 4, 8, 16} depending on MS_i PINs.
 - We want to be able to tell step motor that it should move to another position as soon as it has rotated to the previous one. For that we
   should receive a feed-back from step motor when it has actually reached it. If to have a look over the core code, method distanceToGo() 
   would be one option to adress this problem. This method calculates the difference between the specified target position and the 
