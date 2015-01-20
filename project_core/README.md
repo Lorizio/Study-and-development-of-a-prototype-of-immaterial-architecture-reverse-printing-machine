@@ -8,7 +8,7 @@ Each project's interface is divided into two parts. The first one is common no m
 
 Foam fabrication does not depend on cutting algorithm for step motors, thus can be explained separately here, whereas
 an appropriate cutting algorithm for creating different foam sculptures and part of interface responsible for it, 
-is something project's specific and will be introduced in appropriate project's readme file.
+is something project's specific and will be introduced in appropriate project's **readme** file.
 
 ## Foam fabrication algorithm
 
