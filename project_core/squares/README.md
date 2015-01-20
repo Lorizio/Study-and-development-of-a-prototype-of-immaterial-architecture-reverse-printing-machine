@@ -25,14 +25,7 @@ board.
 In the **setup()** function we first wait until all data is received. The following protocol to send and recieve data is used: **(target position 1, ..., target position R; target position 1, ..., target position L.)**, where **target position 1...R** is a set of control points measured in degrees the right step motor should move, and **target position 1...L** is a set of control points for the left step motor accordingly. All these target positions are stored in two arrays of fixed size and since it is impossible to know exact number of elements in these two arrays by compile time, this size is selected to be big enough. Another possibility would be to dynamically allocate required memory, but this has been considered as not the best solution using Arduino boards. Thus to detect end of constructive part in these arrays, they were **filled with some
 identifier** (see code).
 
-To construct square-shaped foam sculptures the following idea has been used: we can measure the
-time needed to create foam of maximum height and we know the number of target positions from each
-side. Thus if we divide this time by the number of control points from each side, we get the time
-needed to treat exactly one control point. Since we try to obtain square-shaped sculptures, this time
-is the time step motor does not move. It simply stays at the specified position with turned-on
-DC motor that sculptures the foam during this time interval. After that step motor moves to the next
-target position and stays in idling mode as described above. This kind of routine is repeated until
-all control points from each side have been handled by the step motors. 
+To construct square-shaped foam sculptures the following idea was used: we can measure the time needed to create foam of maximum height and we know a number of target positions from each side. Thus if we divide this time by the number of control points from each side, we get the time needed to treat exactly one control point. Since we try to obtain square-shaped sculptures, this time interval is considered to be the time step motor does not move. It simply stays at the specified position with the turned-on DC motor that sculptures the foam during this time interval. After that step motor moves to the next target position and stays in idling mode as described above. This kind of routine is repeated until all control points from each side have been handled by two step motors. 
 
 One important point to notice is that in order to get approximately square-shaped sculptures the 
 motion from one target position to another should be as instant as possible. Thus the value for 
