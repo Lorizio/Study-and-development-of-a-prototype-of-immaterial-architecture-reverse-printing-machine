@@ -68,16 +68,10 @@ run();
 ```
 is used, which executes exactly one step depending on the current speed.
 
-This is all we need to tell step motors what we expect doing from them. Creating of different foam shapes is based on intelligent choice
-of a set of target positions, how they are processed, as well as intelligent choice of speed and acceleration. These aspects will be discussed in 
-later sections.
+This is all we need to tell step motors what we expect doing from them. Creating of different foam shapes is based on intelligent choice of a set of target positions and how they are processed. It also depends on intelligent choice of speed and acceleration. These aspects will be discussed in later sections. If more specific functionality is required, looking at the library source code or even modifying it would be advisable.
 
-	SUB PROJECT DESCRIPTION
+## Project description
 	
-	An attached project in this folder summarizes the above described information. It is again separated into Processing part and an executable
-Arduino part. With a help of three sliders, radio button and simple send button it is possible to adjust a number of degrees step motor should move,
-microstepping, speed and acceleration and then send this data to Arduino. Arduino sketch waits until all parameters are received. If it the case it 
-forbids receiving of another data block as long as step motor is still moving. When the step motor is at the target position, arduino sketch switches
-to wait for data modus and the process repeats once again. This project allows to play with different angles to move, different speeds in large interval
+An attached project in this folder summarizes the above described information. It is again separated into Processing part and an executable Arduino part. With a help of three sliders, radio button and simple send button it is possible to adjust a number of degrees step motor should move, microstepping, speed and acceleration and then send this data to Arduino. Arduino sketch waits until all parameters are received. If it the case it forbids receiving of another data block as long as step motor is still moving. When the step motor is at the target position, arduino sketch switches to wait for data modus and the process repeats once again. This project allows to play with different angles to move, different speeds in large interval
 due to be able to change microstepping parameter, as well as to provide micro tuning of step motor control by changing acceleration and speed.
 	
