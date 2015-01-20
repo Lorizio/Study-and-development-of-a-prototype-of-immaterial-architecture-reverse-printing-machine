@@ -1,6 +1,13 @@
 ## Interface
 	
-This interface allows to manually draw curve-shaped foam features using drag and drop. Before drawing them, first two default sides have to be constructed. To construct them it is sufficient to fill two text fields with desired number of control points from each side. Using these control points we want to create curve features by again using drag and drop. In order to achieve this goal, for each possible arc between the lower and upper neighbour of any control point a set of intermediate points is created. This set represents half of the ellipse and the more intermediate points there are, the more precise half ellipse we will get. Thus one side of the foam is now represented by two sets of points: one set contains all control points and their neighbours, and another one splits those and represents the discretization of one side. The first array thus contains "nPoints = nPointsTemp * 2 + 1" elements, where "nPointsTemp" is a number of control points we filled in a text field before, and the second array contains "dataSize = (nPoints / 2) * nPointsProArc + 1" elements, where "nPointsProArc"
+This interface allows to manually draw curve-shaped foam features using drag and drop. Before drawing them, first two default sides have to be constructed. To construct them it is sufficient to fill two text fields with desired number of control points from each side. Using these control points we want to create curve features by again using drag and drop. In order to achieve this goal, for each possible arc between the lower and upper neighbour of any control point a set of intermediate points is created. This set represents half of the ellipse and the more intermediate points there are, the more precise half ellipse we will get. Thus one side of the foam is now represented by two sets of points: one set contains all control points and their neighbours, and another one splits those and represents the discretization of one side. The first array contains
+```java
+nPoints = nPointsTemp * 2 + 1;
+```
+elements, where **nPointsTemp** is a number of control points we filled in a text field before, and the second array contains ```java
+dataSize = (nPoints / 2) * nPointsProArc + 1;
+```
+elements, where "nPointsProArc"
 denotes a number of intermediate points between the lower and upper neighbour of any control point.
 
 Later in Arduino's section we are going to introduce two possible cutting algorithms that make use of these two arrays. The first one will use data from a bigger array with "dataSize" number of elements, whereas the second algorithm will use an array that contains only information about control points.
