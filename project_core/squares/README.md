@@ -22,15 +22,8 @@ board.
 	
 ## Cutting algorithm
 	
-In the **setup()** function we first wait until all data is received. The following protocol to send and recieve data is used: **( target position_1, ..., target position_R; 
-target position_1, ..., target position_L. )**, where target position_1...R are control points
-measured in degrees the right step motor should move, and target position_1...L are control
-points for the left step motor. All these target positions are stored in two arrays of fixed
-size and since it is impossible to know exact number of elements in these two arrays by compile
-time, this size is selected to be big enough. Another possibility would be to dynamically allocate
-required memory, but this has been considered as not the best solution using Arduino boards. Thus
-to be able to detect end of constructive part in these arrays, they were filled with some 
-identifier.
+In the **setup()** function we first wait until all data is received. The following protocol to send and recieve data is used: **(target position 1, ..., target position R; target position 1, ..., target position L.)**, where **target position 1...R** is a set of control points measured in degrees the right step motor should move, and **target position 1...L** is a set of control points for the left step motor accordingly. All these target positions are stored in two arrays of fixed size and since it is impossible to know exact number of elements in these two arrays by compile time, this size is selected to be big enough. Another possibility would be to dynamically allocate required memory, but this has been considered as not the best solution using Arduino boards. Thus to detect end of constructive part in these arrays, they were **filled with some
+identifier** (see code).
 
 To construct square-shaped foam sculptures the following idea has been used: we can measure the
 time needed to create foam of maximum height and we know the number of target positions from each
