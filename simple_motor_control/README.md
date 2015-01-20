@@ -27,7 +27,10 @@ We have discussed the Hardware part of step motor control. Let us now lighten th
 
 During the semester a number of algorithms have been implemented, which use step motors to cut different foam shapes, starting from some simple cases and ending with more complex ones. But all of them as a core use following routine:
 - Define the values for direction, step, as well as MS1, MS2, MS3 pins.
-- Create a stepper object: AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
+- Create a step motor object: 
+```java
+AccelStepper stepper(1, MOTOR_STEP_PIN, MOTOR_DIR_PIN);
+```
 - As you can see, the constructor does not contain PINs MS_i. The core of AccelStepper library does not set up these PINs, thus it has
   to be done in the setup() method in every Arduino sketch using commands: pinMode(MS_i, OUTPUT) and digitalWrite(MS_i, LOW/HIGH).
 - Set up speed and acceleration using methods setSpeed(SPEED) and setAcceleration(ACCELERATION). The first method sets up the end speed
