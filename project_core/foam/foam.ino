@@ -162,18 +162,21 @@ void loop()
       //control the number of time to produce the foam
       if (generation <= 8)
       {
+        // first mode (see readme)
         if(countHelium < timeOfHelium)
         { 
           heliumValue = 208 + heliumSpeed ; 
           airValue = 0;
         }
         
+        // second mode
         if(countHelium >= timeOfHelium && countHelium < timeOfHelium + timeOfAir)
         {
           heliumValue = 0;
           airValue = 220;
         } 
   
+        // third mode -> value corrections
         if(countHelium >= timeOfHelium + timeOfAir)
         {
           if(generation%2 == 0)
