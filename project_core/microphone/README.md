@@ -4,7 +4,12 @@ Another way to create different foam sculpture is to use microphone. During this
 
 In order to achieve this goal, a **Minim** library was used, which is an audio library developed mainly for **Processing** developing. Its API makes integrating audio into the sketches as simple as possible, while still providing a lot of flexibility. More information about this library and its API can be found on http://code.compartmental.net/minim/.
 
-Using Minim's API we want to create square-shaped foam fragments. For this purpose a special component of Minim's library was used: **FFT**. This tool performs a fast Fourier transformation on audio data to generate a frequency spectrum. What allows us to make the square-shaped foam fragments out of it, is that FFT groups each individual frequence into an appropriate frequency band. Each band has its volume level. In such a way it is possible to adapt this tool to the purposes of this project. Having in general 64 frequency bands, we can create 64 different curve fragments during the simulation. What differs these fragments is the volume level, which corresponds to an appropriate number of degrees a step motor should move.
+Using Minim's API we want to create square-shaped foam fragments. For this purpose a special component of Minim's library was used: **FFT**, which can be included into a sketch using:
+```java
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+```
+This tool performs a fast Fourier transformation on audio data to generate a frequency spectrum. What allows us to make the square-shaped foam fragments out of it, is that FFT groups each individual frequence into an appropriate frequency band. Each band has its volume level. In such a way it is possible to adapt this tool to the purposes of this project. Having in general 64 frequency bands, we can create 64 different curve fragments during the simulation. What differs these fragments is the volume level, which corresponds to an appropriate number of degrees a step motor should move.
 
 This prototype interface works as follows. On the left side of the screen there are three buttons. By clicking a **capture** button, the current FFT result in form of a frequency spectrum for both audio channels is drawn in form of the foam. This result is saved into appropriate arrays, which then will be sent via serial connection to the Arduino board, containing the rescaled information in degrees of the control points by clicking a button **send**.
 
